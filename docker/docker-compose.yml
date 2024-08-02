@@ -1,0 +1,17 @@
+version: '3'
+services:
+  library:
+              build:
+                  context: /opt/libraryservice
+              restart: always
+              image: 'libraryservice:0.0.1'
+              expose:
+                   - "8080"
+              command: /bin/sh -c "java -jar /opt/libraryservice/library.jar"
+              logging:
+                  driver: "json-file"
+                  options:
+                    max-file: "5"
+                    max-size: "10m"
+
+
