@@ -1,0 +1,43 @@
+name: Library Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history so that commits are not truncated
+          ref: ${{ github.ref }}  # Ensure it checks out the branch the workflow was triggered on
+        
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}-v2
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build
+        run: mvn -U -B -DskipTests=true clean install --file pom.xml
+        env:
+          MAVEN_OPTS: "-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: library
+          path: ~/work/library/library/target/library-0.0.1-RELEASE.jar
