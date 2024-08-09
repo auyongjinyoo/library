@@ -89,3 +89,9 @@ For seek of easy testing, please find the postman json collection (library.postm
     }
     ```
   - **Response**: `200 OK` with success message or `400 Bad Request` on failure.
+
+  ## Run In Docker
+  This docker file and docker-compose.yml in the dokcer folder will build the images and copy the library.jar, to build the docker images Run docker compose build to build the image.
+
+
+  
