@@ -47,7 +47,7 @@ public class LibraryControllerTest {
         book.setAuthor("Sample Author");
 
         // Mock the service call
-        Mockito.when(libraryService.borrowBook(Mockito.anyLong(), Mockito.anyLong())).thenReturn(book);
+        Mockito.when(libraryService.borrowBook(Mockito.anyLong(), Mockito.anyLong())).thenReturn(book.getVersion());
 
         // Create the request body
         String requestBody = "{\"borrowerId\":2,\"bookId\":3}";
@@ -68,9 +68,8 @@ public class LibraryControllerTest {
         book.setIsbn("1234567890");
         book.setTitle("Test Book");
         book.setAuthor("Test Author");
-
         // Mock the service call
-        Mockito.when(libraryService.returnBook(Mockito.anyLong(), Mockito.anyLong())).thenReturn(book);
+        Mockito.when(libraryService.returnBook(Mockito.anyLong(), Mockito.anyLong())).thenReturn(book.getVersion());
 
         // Create the request body
         String requestBody = "{\"borrowerId\":2,\"bookId\":3}";

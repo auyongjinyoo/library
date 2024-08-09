@@ -1,9 +1,6 @@
 package com.auyongjinyoo.library.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -49,6 +46,14 @@ public class Book {
         isBorrowed = borrowed;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -65,4 +70,7 @@ public class Book {
     @Size(min = 2, max = 255, message = "Author must be between 2 and 255 characters")
     private String author;
     private boolean isBorrowed;
+
+    @Version
+    private Integer version;
 }
